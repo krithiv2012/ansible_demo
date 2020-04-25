@@ -1,0 +1,25 @@
+---
+ - name: status check lb 
+   hosts: loadbalancer
+   become: yes
+
+   tasks:
+     - name: check loadbalancer
+       command: service nginx status
+
+ - name: status check webserver
+   hosts: webservers
+   become: yes
+
+   tasks:
+     - name: check webserver
+       command: service apache2 status
+
+ - name: status check db
+   hosts: database
+   become: yes
+
+   tasks:
+     - name: check db
+       command: service mysql status
+

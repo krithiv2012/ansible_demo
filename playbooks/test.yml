@@ -1,0 +1,7 @@
+---
+ - name: test file
+   hosts: localhost
+
+   tasks:
+     - name: check the server
+       command: hostname

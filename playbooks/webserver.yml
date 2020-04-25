@@ -1,0 +1,30 @@
+---
+ - hosts: webserver
+   become: true
+   tasks:
+    - name: install web components
+      apt: name={{item}}  state=present update_cache=yes
+      with_items:
+        - apache2
+        - libapache2-mod-wsgi
+        - python-pip
+        - python-virtualenv
+    
+    - name: ensure apache2 started
+      service: name=apache2 state=started enabled=yes
+
+    - name: install module wsgi
+      apache2_module: name=wsgi state=present
+      notify: restart apache2
+
+    - name: remove and create index.html
+      file: path=/var/www/html/index.html state=absent
+      notify: restart apache2
+
+    - name: create index. html
+      copy: src=/opt/ansible/index.html dest=/var/www/html/
+      notify: restart apache2
+
+    handlers: restart apache2
+     - name: restart apache2
+       service: name=apache2 state=restarted
