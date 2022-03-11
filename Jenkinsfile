@@ -9,10 +9,7 @@ pipeline {
           branches: [[name: 'master']],
           extensions: [],
           userRemoteConfigs: [[url: 'https://github.com/krithiv2012/ansible_demo']]])
-            dir('playbooks'){
-                ansiblePlaybook(inventory: 'dev', playbook: 'test.yml')
-                
-            }
+                ansiblePlaybook(inventory: 'dev', playbook: 'playbooks/test.yml')
             }
         }
     }
